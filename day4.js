@@ -275,7 +275,9 @@ function validatePassport(arr) {
 }
 
 function validateStringPartOne(str) {
-    return str.includes("byr") && str.includes("iyr") && str.includes("eyr") && str.includes("hgt") && str.includes("hcl") && str.includes("ecl") && str.includes("pid");
+    const fieldArr = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
+    let testArr = fieldArr.filter(field => str.includes(field));
+    return testArr.length === 7;
 }
 
 function validateInfoPartTwo(str) {
@@ -283,52 +285,43 @@ function validateInfoPartTwo(str) {
     let i = 0;
     arr.forEach((item) => {
         if (item.startsWith("byr")) {
-            if (validateYear(item, 1920, 2002)) {
+            if (validateYear(item.slice(4), 1920, 2002))
                 i++;
-            }
         }
         if (item.startsWith("iyr")) {
-            if (validateYear(item, 2010, 2020)) {
+            if (validateYear(item.slice(4), 2010, 2020))
                 i++;
-            }
         }
         if (item.startsWith("eyr")) {
-            if (validateYear(item, 2020, 2030)) {
+            if (validateYear(item.slice(4), 2020, 2030))
                 i++;
-            }
         }
         if (item.startsWith("hgt")) {
-            if (validateHeight(item)) {
+            if (validateHeight(item.slice(4)))
                 i++;
-            }
         }
         if (item.startsWith("hcl")) {
-            if (validateHairColor(item)) {
+            if (validateHairColor(item.slice(4)))
                 i++;
-            }
         }
         if (item.startsWith("ecl")) {
-            if (validateEyeColor(item)) {
+            if (validateEyeColor(item.slice(4)))
                 i++;
-            }
         }
         if (item.startsWith("pid")) {
-            if (validatePassportId(item)) {
+            if (validatePassportId(item.slice(4)))
                 i++;
-            }
         }
     })
-    // console.log(i);
     return i === 7;
 }
 
 function validateYear(str, min, max) {
-    let newStr = str.slice(4);
-    return newStr.length === 4 && /[0-9]{4}/.test(newStr) && +newStr >= min && +newStr <= max;
+    return str.length === 4 && /[0-9]{4}/.test(str) && +str >= min && +str <= max;
 }
 
 function validateHeight(str) {
-    let newStr = str.slice(4, -2);
+    let newStr = str.slice(0, -2);
     if (str.endsWith("cm")) {
         return +newStr >= 150 && +newStr <= 193;
     }
@@ -338,21 +331,18 @@ function validateHeight(str) {
 }
 
 function validateHairColor(str) {
-    let newStr = str.slice(4);
-    return /^#[0-9a-f]{6}/.test(newStr) && newStr.length === 7;
+    return /^#[0-9a-f]{6}/.test(str) && str.length === 7;
 }
 
 function validateEyeColor(str) {
-    let newStr = str.slice(4)
     const colorArr = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
-    let match = colorArr.filter((color) => color === newStr);
+    let match = colorArr.filter((color) => color === str);
     return match.length === 1;
 }
 
 function validatePassportId(str) {
-    let newStr = str.slice(4);
-    return /[0-9]{9}/.test(newStr) && newStr.length === 9;
+    return /[0-9]{9}/.test(str) && str.length === 9;
 }
 
-validatePassport(testArr);
-validatePassport(arr);
+validatePassport(testArr); // 206
+validatePassport(arr); // 123

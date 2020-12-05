@@ -344,5 +344,5 @@ function validatePassportId(str) {
     return /[0-9]{9}/.test(str) && str.length === 9;
 }
 
-validatePassport(testArr); // 206
-validatePassport(arr); // 123
+validatePassport(testArr); // 2 // 2
+validatePassport(arr); // 206 // 123

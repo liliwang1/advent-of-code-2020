@@ -998,11 +998,11 @@ function binarySearch(arr, direction) {
 function getRowColumnFromSeatId(num) {
     let row = Math.floor(num / 8);
     let column = num - row * 8;
-    console.log("row is ", row, "column is ", column, "seat ID is ", num);
+    console.log("row is", row, "column is", column, "seat ID is", num);
 }
 
 console.log(findMySeatId(boardingPass)); // [6, 710, 712, 933]
-getRowColumnFromSeatId(711);
+getRowColumnFromSeatId(711); // row is 88 column is 7 seat ID is 711
 
 console.log(getSeatIdArr(testArr)); // [119, 357, 567, 820]
 console.log(getSeatIdArr(boardingPass)); // returns an array with 927 elements
